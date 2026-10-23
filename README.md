@@ -1,5 +1,22 @@
 # Python desde cero
 
+[![Python 3.12 | 3.13](https://img.shields.io/badge/Python-3.12%20%7C%203.13-3776AB?logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![Windows · macOS · Linux](https://img.shields.io/badge/Windows%20%C2%B7%20macOS%20%C2%B7%20Linux-555555)](#instalar-python-312-o-mayor)
+[![Pruebas](https://img.shields.io/github/actions/workflow/status/eve-devs/python-desde-0/pruebas.yml?branch=main&label=pruebas)](https://github.com/eve-devs/python-desde-0/actions/workflows/pruebas.yml)
+
+Para gente que nunca ha programado: el curso está en español, se estudia a tu ritmo y las pruebas automáticas te dicen si vas bien.
+
+## Índice
+
+1. [Variables y tipos](modulos/01-variables-y-tipos/)
+2. [Texto](modulos/02-strings/)
+3. [Condicionales](modulos/03-condicionales/)
+4. [Ciclos](modulos/04-ciclos/)
+5. [Listas y diccionarios](modulos/05-listas-y-diccionarios/)
+6. [Funciones](modulos/06-funciones/)
+7. [Archivos y errores](modulos/07-archivos-y-errores/)
+8. [Proyecto final](modulos/08-proyecto-final/)
+
 Cuaderno de estudio para aprender Python 3 por tu cuenta, desde la primera variable hasta un programa pequeño que sí puedes usar: un registro de gastos.
 
 El curso está pensado como **una semana por módulo**. Si un tema te pide más tiempo, quédate ahí. El ritmo es tuyo. Las pruebas automáticas te dicen qué falta; no hay calificación.
@@ -288,3 +305,7 @@ En GitHub Actions las pruebas corren solas, en Python 3.12 y 3.13, en Ubuntu y e
 En la semana 1 vas a ver que `0.1 + 0.2` no da exactamente `0.3`. No es un fallo tuyo. Los `float` de Python (y de casi todos los lenguajes) usan un formato binario. Para este curso alcanza con `round(numero, 2)` cuando hablamos de precios. Un sistema de cobros real suele guardar los centavos como enteros, o usar el módulo `decimal`. Eso puede esperar.
 
 Buena semana 1.
+
+## Si te sirve
+
+Si te sirve, dale una ⭐ a este repositorio para que más gente lo encuentre, y compártelo. Si algo no se entiende, [abre un issue](https://github.com/eve-devs/python-desde-0/issues/new).
