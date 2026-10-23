@@ -1,0 +1,27 @@
+# Bytecode de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Pruebas y herramientas
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Empaquetado
+build/
+dist/
+*.egg-info/
+
+# macOS
+.DS_Store
+
+# Datos personales del proyecto final (semana 8)
+gastos.json
