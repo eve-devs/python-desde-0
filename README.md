@@ -36,15 +36,17 @@ Cuando termines un módulo, cambia `☐` por `☑` en esta tabla.
 | 7 | [Archivos y errores](modulos/07-archivos-y-errores/notas.md) | Guardar información y reaccionar cuando algo falla | ☐ |
 | 8 | [Proyecto final](modulos/08-proyecto-final/notas.md) | Un registro de gastos en la terminal | ☐ |
 
-## Instalar Python 3.12+ en una Mac mini M4
+## Instalar Python 3.12 o mayor
+
+Elige el sistema que uses. Después de instalar, cierra la terminal y ábrela de nuevo: el `PATH` se actualiza al abrirla.
+
+### macOS
 
 La Mac mini M4 usa un chip Apple Silicon. El Python que instales tiene que ser la versión para ese chip (`arm64`), no la versión Intel.
 
 macOS no trae un Python actual. Si al escribir `python3` la Mac te ofrece instalar las herramientas de Xcode, cancela: eso no es el Python de este curso.
 
-Cierra y vuelve a abrir la Terminal después de instalar.
-
-### Opción A. Instalador oficial
+**Opción A. Instalador oficial**
 
 1. Entra a [python.org/downloads/macos](https://www.python.org/downloads/macos/).
 2. Descarga el instalador **macOS 64-bit universal2** de Python 3.13 o, si prefieres, de 3.12. El instalador universal2 sirve para la Mac mini M4. No uses un instalador que diga solo "Intel".
@@ -62,7 +64,7 @@ Si `platform.machine()` imprime `x86_64`, se está usando un Python de Intel baj
 
 El instalador también deja un comando con el número de versión, por ejemplo `python3.13`. Si `python3 --version` no es el que acabas de instalar, usa ese comando con número en los pasos de abajo.
 
-### Opción B. Homebrew
+**Opción B. Homebrew**
 
 Si ya usas Homebrew:
 
@@ -76,31 +78,95 @@ En una Mac con chip Apple, Homebrew instala los programas en `/opt/homebrew/bin`
 
 También aquí la arquitectura tiene que ser `arm64`.
 
+### Windows
+
+Estas instrucciones valen para Windows 10 y Windows 11. No uses la aplicación de Python de la Microsoft Store: el instalador de python.org deja el lanzador `py`, que es el comando más fiable en Windows.
+
+**Opción A. Instalador oficial**
+
+1. Entra a [python.org/downloads/windows](https://www.python.org/downloads/windows/).
+2. Descarga el **Windows installer (64-bit)** de Python 3.13 o de 3.12. No descargues el paquete *embeddable*: es para incluir Python dentro de otro programa, no para estudiar.
+3. Al abrir el instalador, en la **primera** pantalla, marca la casilla de abajo que dice **Add python.exe to PATH**. Después pulsa **Install Now**.
+4. Cierra y vuelve a abrir PowerShell, CMD o Windows Terminal.
+5. Comprueba:
+
+```text
+py --version
+python --version
+```
+
+Los dos tienen que decir `Python 3.12` o mayor. `py` es el lanzador de Windows y sabe encontrar el Python que acabas de instalar. `py -0` lista las versiones que tienes.
+
+Si `python` abre la Store, o dice que no se reconoce, Windows está interceptando el comando. Desactiva los alias `python.exe` y `python3.exe`. En Windows 11: Configuración → Aplicaciones → Configuración avanzada de aplicaciones → **Alias de ejecución de aplicaciones**. En Windows 10 el mismo enlace está en Aplicaciones y características. Vuelve a abrir la terminal. Mientras tanto puedes seguir con `py`.
+
+**Opción B. winget**
+
+Si prefieres instalar desde la terminal:
+
+```text
+winget install --id Python.Python.3.13 -e
+```
+
+Para quedarte en 3.12, el identificador es `Python.Python.3.12`. Acepta el origen si winget lo pregunta. Después abre una terminal nueva y comprueba otra vez con `py --version` y `python --version`.
+
+El instalador silencioso a veces no agrega `python` al `PATH`. Si `python` no aparece y `py --version` sí, sigue el curso con `py`: al activar el entorno virtual, el comando `python` de dentro de `.venv` es el correcto.
+
+### Linux
+
+Sirve el Python 3.12 o 3.13 de tu distribución, o el de [python.org](https://www.python.org/downloads/). Comprueba con `python3 --version`. El entorno virtual y las pruebas se manejan igual que en macOS.
+
 ## Crear el entorno virtual
 
 Un entorno virtual es una carpeta del proyecto con su propio Python y sus propios paquetes. Así no mezclas este curso con otros programas.
 
-Desde la carpeta del repositorio (cambia la ruta por la tuya):
+Entra a la carpeta del repositorio (cambia la ruta por la tuya). Cuando el entorno está activo, el prompt empieza con `(.venv)`. Compruébalo con `python --version`. Cada terminal nueva hay que activarla otra vez. Para salir: `deactivate`.
 
-```bash
-cd ~/ruta/a/python-desde-0
-python3.13 -m venv .venv
-source .venv/bin/activate
+La carpeta `.venv/` no se sube a GitHub. Ya está en `.gitignore`.
+
+Con el entorno activo, instalar las herramientas del curso es igual en los tres sistemas:
+
+```text
 python -m pip install --upgrade pip
 python -m pip install -r requirements-dev.txt
 ```
 
-Si instalaste 3.12 y el comando se llama `python3.12`, usa ese en la línea de `venv`.
-
-Cuando el entorno está activo, el prompt empieza con `(.venv)` y `python` apunta al Python del curso. Compruébalo:
+### macOS y Linux
 
 ```bash
-python --version
+cd ~/ruta/a/python-desde-0
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-Cada vez que abras una terminal nueva, vuelve a activarlo con `source .venv/bin/activate`. Para salir del entorno: `deactivate`.
+Si el comando con versión es `python3.13` o `python3.12`, usa ese en la línea de `venv`.
 
-La carpeta `.venv/` no se sube a GitHub. Ya está en `.gitignore`.
+### Windows (PowerShell)
+
+```text
+cd ruta\a\python-desde-0
+py -m venv .venv
+.venv\Scripts\Activate.ps1
+```
+
+Si PowerShell no reconoce esa ruta, usa `.\.venv\Scripts\Activate.ps1`.
+
+A veces PowerShell se niega a activar el entorno y dice que la ejecución de scripts está deshabilitada, o *running scripts is disabled on this system*. La política solo afecta a tu usuario y no hace falta ser administradora:
+
+```text
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+
+Si pregunta, confirma con `S`. Vuelve a correr `.venv\Scripts\Activate.ps1`.
+
+Si prefieres no cambiar esa política, activa el entorno desde CMD: `activate.bat` no pasa por la política de PowerShell.
+
+### Windows (CMD)
+
+```text
+cd ruta\a\python-desde-0
+py -m venv .venv
+.venv\Scripts\activate.bat
+```
 
 ## Cómo estudiar un módulo
 
@@ -110,9 +176,9 @@ La carpeta `.venv/` no se sube a GitHub. Ya está en `.gitignore`.
 4. Cuando salgan en verde, marca la casilla de la tabla.
 5. Si llevas un rato atorada, mira `solucion.py` y vuelve a explicar la idea con tus palabras. Copiarla sin leerla no enseña.
 
-Para abrir el intérprete dentro de un módulo:
+Para abrir el intérprete dentro de un módulo (en Windows, `cd` acepta esta ruta tanto en PowerShell como en CMD):
 
-```bash
+```text
 cd modulos/01-variables-y-tipos
 python
 ```
@@ -124,44 +190,75 @@ ejercicios.suma(35, 18)
 
 Hasta que completes la función, vas a ver `NotImplementedError`. Es la señal de que ahí falta tu código.
 
-Puedes salir del intérprete con `exit()` o con Control+D.
+Puedes salir del intérprete con `exit()`. En macOS y Linux también vale Control+D. En Windows, Ctrl+Z y después Enter.
 
 ## Cómo correr las pruebas
 
-Con el entorno virtual activo, desde la raíz del repositorio:
+Con el entorno virtual activo, desde la raíz del repositorio, el comando es el mismo en macOS, Linux y Windows:
 
-```bash
+```text
 pytest modulos/01-variables-y-tipos
 ```
+
+Si `pytest` no se reconoce, usa `python -m pytest modulos/01-variables-y-tipos`. Hace lo mismo con el Python del entorno.
 
 Eso prueba **tus** ejercicios. Al principio fallan: el rojo es el mapa de lo que falta, no una regañada.
 
 Para una sola prueba:
 
-```bash
+```text
 pytest modulos/03-condicionales/test_ejercicios.py::test_signo_cero
 ```
 
 Para correr **todas** las pruebas del curso contra tus ejercicios:
 
-```bash
+```text
 pytest
 ```
 
 ### Correr las pruebas contra las soluciones
 
-La variable de entorno `PYTHON_DESDE_0_SOLUCION` cambia el archivo que importan las pruebas. Estos valores activan `solucion.py`: `1`, `true`, `yes`, `si`, `sí`, `solucion`.
+La variable de entorno `PYTHON_DESDE_0_SOLUCION` cambia el archivo que importan las pruebas. Estos valores activan `solucion.py`: `1`, `true`, `yes`, `si`, `sí`, `solucion`. El valor más simple, y el que conviene en Windows, es `1`.
+
+Sin la variable, o con cualquier otro valor, se usa `ejercicios.py`.
+
+La elección se hace al arrancar `pytest`. No se puede cambiar a mitad de una misma corrida. La variable dura mientras la terminal siga abierta.
+
+#### macOS y Linux
 
 ```bash
 PYTHON_DESDE_0_SOLUCION=1 pytest modulos/01-variables-y-tipos
 PYTHON_DESDE_0_SOLUCION=1 pytest
 ```
 
-Sin la variable, o con cualquier otro valor, se usa `ejercicios.py`.
+Así la variable solo existe para ese comando.
 
-La elección se hace al arrancar `pytest`. No se puede cambiar a mitad de una misma corrida.
+#### Windows (PowerShell)
 
-En GitHub Actions las pruebas corren solas, en Python 3.12 y 3.13, siempre con `PYTHON_DESDE_0_SOLUCION=1`. El workflow está en `.github/workflows/pruebas.yml`. Tú, en tu máquina, ves tus ejercicios. El repositorio, en la nube, comprueba que las soluciones sigan siendo válidas.
+```text
+$env:PYTHON_DESDE_0_SOLUCION="1"
+pytest
+```
+
+Las comillas forman parte de la sintaxis de PowerShell: el valor que queda guardado es `1`, sin comillas. Para una sola carpeta:
+
+```text
+$env:PYTHON_DESDE_0_SOLUCION="1"
+pytest modulos/01-variables-y-tipos
+```
+
+Para quitarla en esa misma ventana: `Remove-Item Env:PYTHON_DESDE_0_SOLUCION`.
+
+#### Windows (CMD)
+
+```text
+set PYTHON_DESDE_0_SOLUCION=1
+pytest
+```
+
+En CMD no pongas comillas. `set PYTHON_DESDE_0_SOLUCION="1"` guardaría las comillas dentro del valor y las pruebas seguirían usando `ejercicios.py`. Para quitarla: `set PYTHON_DESDE_0_SOLUCION=`.
+
+En GitHub Actions las pruebas corren solas, en Python 3.12 y 3.13, en Ubuntu y en Windows, siempre con `PYTHON_DESDE_0_SOLUCION=1`. El workflow está en `.github/workflows/pruebas.yml`. Tú, en tu máquina, ves tus ejercicios. El repositorio, en la nube, comprueba que las soluciones sigan siendo válidas.
 
 ## Mapa del repositorio
 

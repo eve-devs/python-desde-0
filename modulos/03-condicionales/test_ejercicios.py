@@ -1,6 +1,9 @@
 """Pruebas de la semana 3.
 
-    PYTHON_DESDE_0_SOLUCION=1 pytest modulos/03-condicionales
+Por defecto importan ejercicios.py.
+macOS y Linux:  PYTHON_DESDE_0_SOLUCION=1 pytest modulos/03-condicionales
+PowerShell:     $env:PYTHON_DESDE_0_SOLUCION="1"; pytest modulos/03-condicionales
+CMD:            set PYTHON_DESDE_0_SOLUCION=1
 """
 
 from pathlib import Path

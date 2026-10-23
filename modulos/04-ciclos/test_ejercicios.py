@@ -1,6 +1,9 @@
 """Pruebas de la semana 4.
 
-    PYTHON_DESDE_0_SOLUCION=1 pytest modulos/04-ciclos
+Por defecto importan ejercicios.py.
+macOS y Linux:  PYTHON_DESDE_0_SOLUCION=1 pytest modulos/04-ciclos
+PowerShell:     $env:PYTHON_DESDE_0_SOLUCION="1"; pytest modulos/04-ciclos
+CMD:            set PYTHON_DESDE_0_SOLUCION=1
 """
 
 from pathlib import Path

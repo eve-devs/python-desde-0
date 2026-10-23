@@ -1,6 +1,9 @@
 """Pruebas de la semana 7.
 
-    PYTHON_DESDE_0_SOLUCION=1 pytest modulos/07-archivos-y-errores
+Por defecto importan ejercicios.py.
+macOS y Linux:  PYTHON_DESDE_0_SOLUCION=1 pytest modulos/07-archivos-y-errores
+PowerShell:     $env:PYTHON_DESDE_0_SOLUCION="1"; pytest modulos/07-archivos-y-errores
+CMD:            set PYTHON_DESDE_0_SOLUCION=1
 """
 
 import json

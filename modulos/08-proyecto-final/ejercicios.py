@@ -64,9 +64,10 @@ def cargar_gastos(ruta: str | Path) -> list[dict]:
 def guardar_gastos(ruta: str | Path, gastos: list[dict]) -> None:
     """Escribe la lista de gastos como JSON.
 
-    UTF-8, ensure_ascii=False, indent=2 y un salto de línea al final.
+    UTF-8, ensure_ascii=False, indent=2, un salto de línea al final
+    y newline="\\n" para que Windows no lo convierta en \\r\\n.
     """
-    # TODO: usa json.dumps con esas opciones.
+    # TODO: usa json.dumps con esas opciones y newline="\n".
     raise NotImplementedError
 
 

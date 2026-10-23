@@ -1,6 +1,9 @@
 """Pruebas de la semana 6.
 
-    PYTHON_DESDE_0_SOLUCION=1 pytest modulos/06-funciones
+Por defecto importan ejercicios.py.
+macOS y Linux:  PYTHON_DESDE_0_SOLUCION=1 pytest modulos/06-funciones
+PowerShell:     $env:PYTHON_DESDE_0_SOLUCION="1"; pytest modulos/06-funciones
+CMD:            set PYTHON_DESDE_0_SOLUCION=1
 """
 
 from pathlib import Path

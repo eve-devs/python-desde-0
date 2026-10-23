@@ -1,6 +1,9 @@
 """Pruebas del registro de gastos.
 
-    PYTHON_DESDE_0_SOLUCION=1 pytest modulos/08-proyecto-final
+Por defecto importan ejercicios.py.
+macOS y Linux:  PYTHON_DESDE_0_SOLUCION=1 pytest modulos/08-proyecto-final
+PowerShell:     $env:PYTHON_DESDE_0_SOLUCION="1"; pytest modulos/08-proyecto-final
+CMD:            set PYTHON_DESDE_0_SOLUCION=1
 """
 
 from datetime import date

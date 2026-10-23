@@ -32,7 +32,7 @@ Reglas de `crear_gasto`:
 
 ## El archivo
 
-`guardar_gastos` escribe una lista de gastos en JSON, UTF-8, `ensure_ascii=False`, indentado a 2 espacios, con un salto de línea al final. Así "Café" se lee como Café dentro del archivo.
+`guardar_gastos` escribe una lista de gastos en JSON, UTF-8, `ensure_ascii=False`, indentado a 2 espacios, con un salto de línea al final. Pasa también `newline="\n"`: en Windows, sin eso, Python guarda `\r\n` y el archivo cambia de una computadora a otra. Así "Café" se lee como Café dentro del archivo. Las rutas se arman con `pathlib.Path`, que entiende tanto `\` como `/`.
 
 `cargar_gastos` hace el camino de vuelta.
 
@@ -76,7 +76,7 @@ El monto siempre se muestra con dos decimales: `$45.50`, no `$45.5`.
 
 `main(argumentos, ruta)` no imprime. Devuelve el texto que hay que mostrar. Así las pruebas pueden leerlo. Al final de `ejercicios.py` hay un bloque que sí imprime, y solo corre cuando tú ejecutas el archivo:
 
-```bash
+```text
 cd modulos/08-proyecto-final
 python ejercicios.py
 python ejercicios.py agregar "Café" 45.50 alimentos 2026-10-01
@@ -85,6 +85,8 @@ python ejercicios.py total
 python ejercicios.py resumen
 python ejercicios.py categoria alimentos
 ```
+
+Esos comandos valen en macOS, Linux, PowerShell y CMD, con el entorno virtual activo. En Windows, si la eñe o el acento del argumento llegan mal, abre Windows Terminal o, en esa ventana, corre `chcp 65001` antes de escribir el gasto.
 
 El archivo se llama `gastos.json` y aparece en la carpeta actual. Si lo corres desde otra carpeta, el JSON se crea ahí.
 
@@ -148,9 +150,9 @@ Las pruebas no te obligan a ir en este orden, pero cada paso se apoya en el ante
 5. `formatear_resumen`.
 6. `main`.
 
-Corre las pruebas de una función antes de pasar a la siguiente:
+Corre las pruebas de una función antes de pasar a la siguiente. Con el entorno activo, el comando es el mismo en macOS, Linux y Windows:
 
-```bash
+```text
 pytest modulos/08-proyecto-final/test_ejercicios.py::test_crear_gasto_normaliza
 ```
 

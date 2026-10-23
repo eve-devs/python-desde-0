@@ -44,9 +44,11 @@ def leer_texto(ruta: str | Path) -> str:
 def escribir_texto(ruta: str | Path, contenido: str) -> None:
     """Escribe contenido en la ruta, reemplazando lo que hubiera.
 
-    Usa UTF-8. No agregues nada que no te hayan pasado.
+    Usa UTF-8 y newline="\\n". En Windows, sin newline, Python
+    guarda \\r\\n y los bytes del archivo cambian.
+    No agregues nada que no te hayan pasado.
     """
-    Path(ruta).write_text(contenido, encoding="utf-8")
+    Path(ruta).write_text(contenido, encoding="utf-8", newline="\n")
 
 
 def agregar_linea(ruta: str | Path, linea: str) -> None:
@@ -55,9 +57,9 @@ def agregar_linea(ruta: str | Path, linea: str) -> None:
     Si el archivo no existe, lo crea.
     Si linea ya termina en salto de línea, no pongas otro.
     "hola" y "hola\\n" dejan las dos el texto hola seguido de un salto.
-    Usa UTF-8.
+    Usa UTF-8 y newline="\\n" para que el salto no se convierta en \\r\\n.
     """
-    with Path(ruta).open("a", encoding="utf-8") as archivo:
+    with Path(ruta).open("a", encoding="utf-8", newline="\n") as archivo:
         archivo.write(linea.rstrip("\n") + "\n")
 
 
@@ -74,10 +76,11 @@ def guardar_json(ruta: str | Path, datos: object) -> None:
     """Guarda datos como JSON en UTF-8.
 
     Usa ensure_ascii=False para que "café" se vea como café.
-    Indenta con 2 espacios y termina el archivo con un salto de línea.
+    Indenta con 2 espacios, termina el archivo con un salto de línea
+    y usa newline="\\n" para no escribir \\r\\n en Windows.
     """
     texto = json.dumps(datos, ensure_ascii=False, indent=2)
-    Path(ruta).write_text(texto + "\n", encoding="utf-8")
+    Path(ruta).write_text(texto + "\n", encoding="utf-8", newline="\n")
 
 
 def leer_json_si_existe(ruta: str | Path, valor_si_falta):

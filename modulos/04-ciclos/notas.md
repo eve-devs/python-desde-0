@@ -33,7 +33,7 @@ while restante > 0:
     restante = restante - 1
 ```
 
-Si olvidas cambiar `restante`, el ciclo no termina. Para cortarlo: Control+C. En la terminal eso lanza `KeyboardInterrupt` y recuperas el control.
+Si olvidas cambiar `restante`, el ciclo no termina. Para cortarlo: Ctrl+C, en macOS, Linux y Windows. En la terminal eso lanza `KeyboardInterrupt` y recuperas el control.
 
 En estos ejercicios el `for` alcanza. Úsalo.
 

@@ -45,9 +45,11 @@ def leer_texto(ruta: str | Path) -> str:
 def escribir_texto(ruta: str | Path, contenido: str) -> None:
     """Escribe contenido en la ruta, reemplazando lo que hubiera.
 
-    Usa UTF-8. No agregues nada que no te hayan pasado.
+    Usa UTF-8 y newline="\\n". En Windows, sin newline, Python
+    guarda \\r\\n y los bytes del archivo cambian.
+    No agregues nada que no te hayan pasado.
     """
-    # TODO: write_text con encoding="utf-8".
+    # TODO: write_text con encoding="utf-8" y newline="\n".
     raise NotImplementedError
 
 
@@ -57,9 +59,9 @@ def agregar_linea(ruta: str | Path, linea: str) -> None:
     Si el archivo no existe, lo crea.
     Si linea ya termina en salto de línea, no pongas otro.
     "hola" y "hola\\n" dejan las dos el texto hola seguido de un salto.
-    Usa UTF-8.
+    Usa UTF-8 y newline="\\n" para que el salto no se convierta en \\r\\n.
     """
-    # TODO: abre en modo "a" dentro de un with y escribe la línea.
+    # TODO: abre en modo "a", con encoding="utf-8" y newline="\n".
     raise NotImplementedError
 
 
@@ -77,9 +79,10 @@ def guardar_json(ruta: str | Path, datos: object) -> None:
     """Guarda datos como JSON en UTF-8.
 
     Usa ensure_ascii=False para que "café" se vea como café.
-    Indenta con 2 espacios y termina el archivo con un salto de línea.
+    Indenta con 2 espacios, termina el archivo con un salto de línea
+    y usa newline="\\n" para no escribir \\r\\n en Windows.
     """
-    # TODO: json.dumps con esas opciones, más un salto al final.
+    # TODO: json.dumps con esas opciones, más un salto al final y newline="\n".
     raise NotImplementedError
 
 

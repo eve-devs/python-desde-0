@@ -1,8 +1,9 @@
 """Pruebas de la semana 1.
 
-Por defecto importan ejercicios.py. Para usar la solución:
-
-    PYTHON_DESDE_0_SOLUCION=1 pytest modulos/01-variables-y-tipos
+Por defecto importan ejercicios.py.
+macOS y Linux:  PYTHON_DESDE_0_SOLUCION=1 pytest modulos/01-variables-y-tipos
+PowerShell:     $env:PYTHON_DESDE_0_SOLUCION="1"; pytest modulos/01-variables-y-tipos
+CMD:            set PYTHON_DESDE_0_SOLUCION=1
 """
 
 from pathlib import Path

@@ -102,10 +102,11 @@ def cargar_gastos(ruta: str | Path) -> list[dict]:
 def guardar_gastos(ruta: str | Path, gastos: list[dict]) -> None:
     """Escribe la lista de gastos como JSON.
 
-    UTF-8, ensure_ascii=False, indent=2 y un salto de línea al final.
+    UTF-8, ensure_ascii=False, indent=2, un salto de línea al final
+    y newline="\\n" para que Windows no lo convierta en \\r\\n.
     """
     texto = json.dumps(gastos, ensure_ascii=False, indent=2)
-    Path(ruta).write_text(texto + "\n", encoding="utf-8")
+    Path(ruta).write_text(texto + "\n", encoding="utf-8", newline="\n")
 
 
 def agregar_gasto(

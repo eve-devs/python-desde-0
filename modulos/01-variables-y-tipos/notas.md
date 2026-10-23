@@ -6,7 +6,7 @@ Esta semana vas a guardar datos y a calcular con ellos: la cuenta de un café, l
 
 1. Lee estas notas y corre los ejemplos.
 2. Completa `ejercicios.py`. Cada función tiene un `# TODO`.
-3. Desde la raíz del repositorio, con el entorno activo:
+3. Desde la raíz del repositorio, con el entorno activo. El comando es el mismo en macOS, Linux y Windows:
 
 ```bash
 pytest modulos/01-variables-y-tipos

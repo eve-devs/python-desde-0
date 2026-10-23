@@ -7,7 +7,12 @@ si, sí o solucion, se carga solucion.py. Así puedes practicar con tus
 funciones y, cuando quieras, comparar con la solución:
 
     pytest modulos/01-variables-y-tipos
-    PYTHON_DESDE_0_SOLUCION=1 pytest modulos/01-variables-y-tipos
+
+Para cargar solucion.py, define PYTHON_DESDE_0_SOLUCION=1.
+En macOS y Linux: PYTHON_DESDE_0_SOLUCION=1 pytest modulos/01-variables-y-tipos
+En PowerShell:    $env:PYTHON_DESDE_0_SOLUCION="1"
+En CMD:           set PYTHON_DESDE_0_SOLUCION=1
+El README trae el paso a paso de cada sistema.
 
 En GitHub Actions las pruebas siempre corren contra las soluciones.
 """

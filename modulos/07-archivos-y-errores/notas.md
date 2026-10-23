@@ -12,7 +12,7 @@ def leer_entero(texto):
         return None
 ```
 
-`int("42")` vale 42. `int("3.14")` y `int("hola")` lanzan `ValueError`. El `except` solo debe nombrar el error que esperas. Un `except:` pelado también atrapa Control+C y esconde fallos de verdad. No lo uses.
+`int("42")` vale 42. `int("3.14")` y `int("hola")` lanzan `ValueError`. El `except` solo debe nombrar el error que esperas. Un `except:` pelado también atrapa Ctrl+C (en macOS, Linux y Windows) y esconde fallos de verdad. No lo uses.
 
 `else` corre cuando **no** hubo error. `finally` corre siempre, haya error o no. Para cerrar un archivo, `with` es más claro que `finally`, y es lo que vamos a usar.
 
@@ -71,21 +71,23 @@ from pathlib import Path
 
 ruta = Path("notas") / "hoy.txt"
 texto = ruta.read_text(encoding="utf-8")
-ruta.write_text("Hola\n", encoding="utf-8")
+ruta.write_text("Hola\n", encoding="utf-8", newline="\n")
 ```
 
-El operador `/` entre un `Path` y un texto junta las partes con el separador del sistema. No pegues rutas a mano con `"/"`.
+El operador `/` entre un `Path` y un texto junta las partes con el separador del sistema: barra invertida en Windows, barra normal en macOS y Linux. No escribas `C:\...` ni `/Users/...` dentro de las funciones, y no pegues rutas a mano con `"/"`. Quien llama te pasa la ruta. `Path` la entiende en los tres sistemas.
 
 `write_text` crea el archivo o lo **sobrescribe**. Para agregar al final, ábrelo en modo `"a"`:
 
 ```python
-with ruta.open("a", encoding="utf-8") as archivo:
+with ruta.open("a", encoding="utf-8", newline="\n") as archivo:
     archivo.write("otra línea\n")
 ```
 
 `with` cierra el archivo aunque haya un error a mitad de camino. Cuando el bloque termina, el archivo ya está cerrado.
 
-Pasa siempre `encoding="utf-8"`. En tu Mac el idioma por defecto suele ser UTF-8 y "canción" se guarda bien aunque te olvides. En otras computadoras el olvido convierte la eñe en un error, o en otra letra. Escribir el encoding es parte de la solución, no un adorno.
+Pasa siempre `encoding="utf-8"`. En macOS y en Linux el idioma por defecto suele ser UTF-8, y "canción" se guarda bien aunque te olvides. En Windows el predeterminado suele ser una página como cp1252: sin `encoding`, la eñe puede lanzar `UnicodeEncodeError` o guardarse como otra letra. Escribir el encoding es parte de la solución.
+
+En Windows, además, el modo texto convierte cada `\n` que escribes en `\r\n`. Para que el archivo quede con el mismo salto de línea en los tres sistemas, pasa `newline="\n"`. Las pruebas de `escribir_texto` comparan los bytes del archivo, así que en Windows ese argumento hace falta.
 
 Una ruta puede llegarte como texto o como `Path`. `Path(ruta)` acepta las dos cosas: si ya es un `Path`, te lo devuelve.
 
