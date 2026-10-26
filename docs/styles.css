@@ -47,7 +47,7 @@
   --text-num: 1.75rem;
   --measure: 40rem;
   --measure-tight: 38rem;
-  --column: 46rem;
+  --column: 64rem;
 
   --container: 67.5rem;
   --gutter: var(--space-4);
@@ -733,6 +733,35 @@ main:focus {
 
   .modules {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 56rem) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(16.5rem, 0.9fr);
+    align-items: center;
+    justify-items: stretch;
+    gap: var(--space-6) var(--space-7);
+  }
+
+  .hero-copy {
+    align-items: flex-start;
+    text-align: start;
+  }
+
+  .lede {
+    margin-inline: 0;
+  }
+
+  .actions,
+  .facts {
+    justify-content: flex-start;
+  }
+
+  .sheet {
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
   }
 }
 
