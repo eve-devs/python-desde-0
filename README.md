@@ -4,6 +4,8 @@
 [![Windows · macOS · Linux](https://img.shields.io/badge/Windows%20%C2%B7%20macOS%20%C2%B7%20Linux-555555)](#instalar-python-312-o-mayor)
 [![Pruebas](https://img.shields.io/github/actions/workflow/status/eve-devs/python-desde-0/pruebas.yml?branch=main&label=pruebas)](https://github.com/eve-devs/python-desde-0/actions/workflows/pruebas.yml)
 
+**Sitio del curso:** [https://eve-devs.github.io/python-desde-0/](https://eve-devs.github.io/python-desde-0/)
+
 Para gente que nunca ha programado: el curso está en español, se estudia a tu ritmo y las pruebas automáticas te dicen si vas bien.
 
 ## Índice
@@ -282,6 +284,7 @@ En GitHub Actions las pruebas corren solas, en Python 3.12 y 3.13, en Ubuntu y e
 ```text
 .
 ├── README.md
+├── docs/
 ├── requirements-dev.txt
 ├── pytest.ini
 ├── .gitignore
