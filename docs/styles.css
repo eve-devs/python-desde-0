@@ -111,7 +111,6 @@ code {
   top: 0;
   z-index: 10;
   background: var(--bg);
-  border-bottom: 4px solid var(--yellow);
 }
 
 .header-inner {
@@ -194,11 +193,8 @@ code {
 }
 
 .kicker {
-  display: inline-block;
-  padding: 0.12em 0.45em;
-  background: var(--yellow);
-  color: var(--ink-strong);
   font-weight: 700;
+  color: #fff;
 }
 
 h1 {
@@ -211,15 +207,6 @@ h1 {
 
 h1 .line {
   display: block;
-}
-
-h1 .line + .line {
-  display: inline-block;
-  width: fit-content;
-  margin-top: 0.12em;
-  padding: 0.02em 0.16em 0.05em;
-  background: var(--yellow);
-  color: var(--ink-strong);
 }
 
 .lede {
@@ -296,7 +283,6 @@ h1 .line + .line {
   overflow: hidden;
   background: var(--paper);
   color: var(--ink);
-  border-left: 12px solid var(--yellow);
   box-shadow: 0 22px 44px rgba(0, 0, 0, 0.32);
 }
 
@@ -347,24 +333,11 @@ h1 .line + .line {
   border-top: 4px solid var(--blue);
 }
 
-#como-funciona {
-  border-top: 4px solid var(--yellow);
-}
-
 h2 {
   font-weight: 700;
   font-size: clamp(1.75rem, 3vw, 2.25rem);
   line-height: 1.2;
   color: #f4f0e6;
-}
-
-h2::after {
-  content: "";
-  display: block;
-  width: 3rem;
-  height: 4px;
-  margin-top: 0.55rem;
-  background: var(--yellow);
 }
 
 .intro {
@@ -402,8 +375,7 @@ h2::after {
   background: rgba(55, 118, 171, 0.16);
 }
 
-.module a:hover h3,
-.module a:hover .go {
+.module a:hover h3 {
   text-decoration: underline;
   text-underline-offset: 0.14em;
 }
@@ -512,7 +484,6 @@ h2::after {
 
 .site-footer {
   background: var(--blue-deep);
-  border-top: 4px solid var(--yellow);
   padding-top: 1.75rem;
   padding-bottom: calc(2.25rem + env(safe-area-inset-bottom));
 }
@@ -538,7 +509,7 @@ h2::after {
 .site-footer nav a {
   color: var(--yellow-bright);
   font-weight: 700;
-  text-underline-offset: 0.16em;
+  text-decoration: none;
 }
 
 .footer-note a:hover,
