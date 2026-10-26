@@ -4,7 +4,7 @@ Vas a construir un programa de terminal para anotar en qué se te va el dinero. 
 
 No es una simulación de juguete: cuando lo termines, puedes usarlo de verdad. El archivo `gastos.json` queda en la carpeta desde la que lo corras, y `.gitignore` evita que tus gastos se suban a GitHub por accidente.
 
-Los precios se guardan como `float` redondeados a centavos. Para un registro personal alcanza. Un sistema de cobros profesional suele guardar centavos enteros, o usar `decimal.Decimal`, porque el binario de los `float` no representa bien todas las décimas. El README lo cuenta en la semana 1. Aquí `round(monto, 2)` es la decisión consciente.
+Los precios se guardan como `float` redondeados a centavos. Para un registro personal alcanza. Un sistema de cobros profesional suele guardar centavos enteros, o usar `decimal.Decimal`, porque el binario de los `float` no representa bien todas las décimas. El README lo cuenta en la semana 1. Aquí `round(monto, 2)` es la decisión consciente. Si ese redondeo queda en `0.00`, el monto no entra.
 
 ## El dato
 
@@ -24,7 +24,7 @@ Reglas de `crear_gasto`:
 | Campo | Regla |
 | --- | --- |
 | descripción | Texto. Se le quitan los espacios de los extremos. Si queda vacía: `ValueError` con `"La descripción no puede estar vacía."` |
-| monto | Un `int` o un `float` finito, mayor que cero. `True` y `False` no cuentan, aunque en Python `bool` sea un `int`. Tampoco valen textos, `inf` ni `nan`. El mensaje es `"El monto debe ser un número."` Si el número es 0 o negativo: `"El monto debe ser mayor que cero."` Se guarda como `float` redondeado a 2 decimales. |
+| monto | Un `int` o un `float` finito. `True` y `False` no cuentan, aunque en Python `bool` sea un `int`. Tampoco valen textos, `inf` ni `nan`: `"El monto debe ser un número."` Un entero tan grande que no cabe en un `float`: `"El monto es demasiado grande."` Se redondea con `round(monto, 2)` y ese resultado tiene que ser mayor que cero. Si es 0, negativo, o queda en `0.00` (como `0.001` y `0.004`): `"El monto debe ser mayor que cero."` El `float` `0.005` se guarda como `0.01`. Si cae justo en la mitad, `round` se queda con el centavo par: `10.125` queda en `10.12`. Se guarda como `float`. |
 | categoría | Texto, sin espacios en los extremos, en minúsculas. `" Alimentos "` se guarda como `"alimentos"`. Si queda vacía: `"La categoría no puede estar vacía."` |
 | fecha | Texto `AAAA-MM-DD`, por ejemplo `2026-10-01`. Si pasas `None`, se usa la fecha de hoy. Si el formato no es ese, o el día no existe (`2026-02-31`): `"La fecha debe tener el formato AAAA-MM-DD."` |
 
@@ -39,6 +39,8 @@ Reglas de `crear_gasto`:
 - Si el archivo no existe, devuelve `[]` y no lo crea.
 - Si el texto no es JSON, lanza `ValueError` con `"El archivo de gastos no contiene JSON válido."`
 - Si el JSON no es una lista, lanza `ValueError` con `"El archivo de gastos debe contener una lista."`
+- Cada elemento tiene que ser un diccionario con `descripcion` (texto), `monto` (número finito), `categoria` (texto) y `fecha` (texto). Si no, `ValueError` con `"El gasto 1 debe tener descripcion (texto), monto (número finito), categoria (texto) y fecha (texto)."` El número es la posición, empezando en 1. No vuelve a aplicar las reglas de `crear_gasto`: un monto `0` escrito a mano se lee igual. Las llaves de más se conservan.
+- Si un número tiene demasiados dígitos para leerlo, `ValueError` con `"El archivo de gastos tiene un número demasiado grande."`
 
 `agregar_gasto` carga, crea el gasto, lo agrega, guarda y devuelve el gasto nuevo.
 

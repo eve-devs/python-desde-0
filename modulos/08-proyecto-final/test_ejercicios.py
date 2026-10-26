@@ -34,6 +34,14 @@ def test_crear_gasto_normaliza():
 def test_crear_gasto_redondea_a_centavos():
     assert _gasto("Pan", 10.126, "alimentos", "2026-10-01")["monto"] == 10.13
     assert _gasto("Pan", 10.124, "alimentos", "2026-10-01")["monto"] == 10.12
+    # Mitad exacta: el centavo par se queda y el impar sube.
+    assert _gasto("Pan", 10.125, "alimentos", "2026-10-01")["monto"] == 10.12
+    assert _gasto("Pan", 0.375, "alimentos", "2026-10-01")["monto"] == 0.38
+    assert _gasto("Pan", 0.625, "alimentos", "2026-10-01")["monto"] == 0.62
+    # 0.125 es la mitad entre 0.12 y 0.13, y 2 es par.
+    assert _gasto("Pan", 0.125, "alimentos", "2026-10-01")["monto"] == 0.12
+    # El float 0.005 queda un pelín por encima de la mitad exacta.
+    assert _gasto("Pan", 0.005, "alimentos", "2026-10-01")["monto"] == 0.01
 
 
 def test_crear_gasto_usa_hoy_si_no_hay_fecha():
@@ -52,6 +60,11 @@ def test_crear_gasto_usa_hoy_si_no_hay_fecha():
         (("Pan", float("nan"), "cafe", "2026-10-01"), "El monto debe ser un número."),
         (("Pan", 0, "cafe", "2026-10-01"), "El monto debe ser mayor que cero."),
         (("Pan", -3, "cafe", "2026-10-01"), "El monto debe ser mayor que cero."),
+        (("Pan", 0.001, "cafe", "2026-10-01"), "El monto debe ser mayor que cero."),
+        (("Pan", 0.004, "cafe", "2026-10-01"), "El monto debe ser mayor que cero."),
+        (("Pan", 0.0049, "cafe", "2026-10-01"), "El monto debe ser mayor que cero."),
+        (("Pan", -(10**309), "cafe", "2026-10-01"), "El monto debe ser mayor que cero."),
+        (("Pan", 10**309, "cafe", "2026-10-01"), "El monto es demasiado grande."),
         (("Pan", 10, "   ", "2026-10-01"), "La categoría no puede estar vacía."),
         (("Pan", 10, "cafe", "2026-1-01"), "La fecha debe tener el formato AAAA-MM-DD."),
         (("Pan", 10, "cafe", "23-10-2026"), "La fecha debe tener el formato AAAA-MM-DD."),
@@ -92,6 +105,102 @@ def test_cargar_gastos_exige_una_lista(tmp_path):
     ruta.write_text('{"a": 1}\n', encoding="utf-8")
     with pytest.raises(ValueError, match="El archivo de gastos debe contener una lista"):
         ejercicios.cargar_gastos(ruta)
+
+
+@pytest.mark.parametrize(
+    ("texto", "mensaje"),
+    [
+        (
+            '[{"descripcion": "Café"}]\n',
+            "El gasto 1 debe tener descripcion",
+        ),
+        (
+            '[{"descripcion": "Café", "monto": 10, "categoria": "cafe", "fecha": "2026-10-01"},'
+            ' {"monto": 1}]\n',
+            "El gasto 2 debe tener descripcion",
+        ),
+        (
+            '[{"descripcion": "Café", "monto": "45", "categoria": "cafe", "fecha": "2026-10-01"}]\n',
+            "El gasto 1 debe tener descripcion",
+        ),
+        (
+            '[{"descripcion": "Café", "monto": null, "categoria": "cafe", "fecha": "2026-10-01"}]\n',
+            "El gasto 1 debe tener descripcion",
+        ),
+        (
+            '[{"descripcion": "Café", "monto": true, "categoria": "cafe", "fecha": "2026-10-01"}]\n',
+            "El gasto 1 debe tener descripcion",
+        ),
+        (
+            "[1]\n",
+            "El gasto 1 debe tener descripcion",
+        ),
+        (
+            '[{"descripcion": "Café", "monto": 1e309, "categoria": "cafe", "fecha": "2026-10-01"}]\n',
+            "El gasto 1 debe tener descripcion",
+        ),
+    ],
+)
+def test_cargar_gastos_rechaza_registros_incompletos_o_mal_formados(tmp_path, texto, mensaje):
+    ruta = tmp_path / "gastos.json"
+    ruta.write_text(texto, encoding="utf-8")
+    with pytest.raises(ValueError, match=mensaje):
+        ejercicios.cargar_gastos(ruta)
+
+
+def test_cargar_gastos_rechaza_un_monto_entero_enorme(tmp_path):
+    ruta = tmp_path / "gastos.json"
+    # Cabe al leer el JSON y no cabe en un float.
+    monto = "1" + ("0" * 1000)
+    ruta.write_text(
+        '[{"descripcion": "Café", "monto": '
+        + monto
+        + ', "categoria": "cafe", "fecha": "2026-10-01"}]\n',
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="El gasto 1 debe tener descripcion"):
+        ejercicios.cargar_gastos(ruta)
+
+
+def test_cargar_gastos_rechaza_un_entero_con_demasiados_digitos(tmp_path):
+    ruta = tmp_path / "gastos.json"
+    monto = "1" + ("0" * 5000)
+    ruta.write_text(
+        '[{"descripcion": "Café", "monto": '
+        + monto
+        + ', "categoria": "cafe", "fecha": "2026-10-01"}]\n',
+        encoding="utf-8",
+    )
+    with pytest.raises(
+        ValueError,
+        match="El archivo de gastos tiene un número demasiado grande",
+    ):
+        ejercicios.cargar_gastos(ruta)
+
+
+def test_cargar_gastos_conserva_la_forma_valida(tmp_path):
+    ruta = tmp_path / "gastos.json"
+    ruta.write_text(
+        '[{"descripcion": "Café", "monto": 45, "categoria": "alimentos", '
+        '"fecha": "2026-10-01", "nota": "extra"},'
+        ' {"descripcion": "", "monto": 0, "categoria": "cafe", "fecha": "no-fecha"}]\n',
+        encoding="utf-8",
+    )
+    assert ejercicios.cargar_gastos(ruta) == [
+        {
+            "descripcion": "Café",
+            "monto": 45,
+            "categoria": "alimentos",
+            "fecha": "2026-10-01",
+            "nota": "extra",
+        },
+        {
+            "descripcion": "",
+            "monto": 0,
+            "categoria": "cafe",
+            "fecha": "no-fecha",
+        },
+    ]
 
 
 def test_agregar_gasto_persiste(tmp_path):
