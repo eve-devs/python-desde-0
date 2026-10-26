@@ -7,9 +7,11 @@
   --muted: #c5d2e0;
   --line: rgba(197, 210, 224, 0.18);
   --blue: #3776ab;
-  --blue-deep: #2d6798;
+  --blue-deep: #306998;
   --blue-soft: #9fd0f0;
   --yellow: #ffd43b;
+  --yellow-bright: #ffe873;
+  --ink-strong: #1a2330;
   --paper: #f6f1e7;
   --ink: #1a2430;
   --ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -109,7 +111,7 @@ code {
   top: 0;
   z-index: 10;
   background: var(--bg);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 4px solid var(--yellow);
 }
 
 .header-inner {
@@ -177,11 +179,12 @@ code {
 
 .nav-cta {
   font-weight: 700;
-  color: var(--blue-soft);
+  color: var(--yellow);
 }
 
 .hero {
-  padding-block: clamp(2.25rem, 5vw, 4rem) clamp(2.5rem, 6vw, 4.25rem);
+  padding-block: clamp(2.4rem, 5vw, 4.2rem) clamp(2.6rem, 6vw, 4.4rem);
+  background: linear-gradient(155deg, #3776ab 0%, #306998 58%, #245a86 100%);
 }
 
 .hero-grid {
@@ -191,29 +194,41 @@ code {
 }
 
 .kicker {
-  font-weight: 600;
-  color: var(--yellow);
+  display: inline-block;
+  padding: 0.12em 0.45em;
+  background: var(--yellow);
+  color: var(--ink-strong);
+  font-weight: 700;
 }
 
 h1 {
-  margin-top: 0.55rem;
+  margin-top: 0.7rem;
   font-weight: 700;
   font-size: clamp(2.6rem, 6.4vw, 4.25rem);
   line-height: 1.05;
-  color: #f4f0e6;
+  color: #fff;
 }
 
 h1 .line {
   display: block;
 }
 
+h1 .line + .line {
+  display: inline-block;
+  width: fit-content;
+  margin-top: 0.12em;
+  padding: 0.02em 0.16em 0.05em;
+  background: var(--yellow);
+  color: var(--ink-strong);
+}
+
 h1::after {
   content: "";
   display: block;
-  width: 2.75rem;
-  height: 3px;
-  margin-top: 1rem;
-  background: var(--blue);
+  width: 4.5rem;
+  height: 4px;
+  margin-top: 1.05rem;
+  background: var(--yellow-bright);
 }
 
 .lede {
@@ -221,7 +236,7 @@ h1::after {
   max-width: 38rem;
   font-size: 1.2rem;
   line-height: 1.55;
-  color: var(--lede);
+  color: #fff;
 }
 
 .actions {
@@ -238,8 +253,8 @@ h1::after {
   justify-content: center;
   min-height: 48px;
   padding: 0.65rem 1.15rem;
-  background: var(--blue);
-  color: #fff;
+  background: var(--yellow);
+  color: var(--ink-strong);
   font-weight: 700;
   line-height: 1.2;
   text-align: center;
@@ -248,16 +263,25 @@ h1::after {
 }
 
 .btn:hover {
-  background: var(--blue-deep);
-  color: #fff;
+  background: var(--yellow-bright);
+  color: var(--ink-strong);
+}
+
+.btn:focus-visible {
+  outline-color: #fff;
 }
 
 .link {
   display: inline-flex;
   align-items: center;
   min-height: 48px;
+  color: #fff;
   font-weight: 700;
   text-underline-offset: 0.16em;
+}
+
+.hero .link:hover {
+  color: #fff;
 }
 
 .facts {
@@ -265,43 +289,37 @@ h1::after {
   flex-wrap: wrap;
   gap: 0.25rem 0;
   margin-top: 1.35rem;
-  color: var(--muted);
+  color: #fff;
   font-size: 1rem;
 }
 
 .facts li:not(:last-child)::after {
   content: "·";
   margin-inline: 0.55rem;
-  color: var(--blue-soft);
+  color: #fff;
 }
 
 .sheet {
   position: relative;
   max-width: 28rem;
+  overflow: hidden;
   background: var(--paper);
   color: var(--ink);
-  padding: 1.15rem 1.2rem 1rem 1.55rem;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
-}
-
-.sheet::before {
-  content: "";
-  position: absolute;
-  top: 0.65rem;
-  bottom: 0.65rem;
-  left: 0.72rem;
-  width: 1px;
-  background: rgba(55, 118, 171, 0.45);
+  border-left: 12px solid var(--yellow);
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.32);
 }
 
 .sheet figcaption {
+  padding: 0.7rem 1.1rem;
+  background: var(--blue);
+  color: #fff;
   font-size: 0.95rem;
   font-weight: 700;
-  color: #1a4f86;
 }
 
 .sheet pre {
-  margin: 0.8rem 0 0;
+  margin: 0;
+  padding: 0.95rem 1.1rem 0.15rem;
   font-size: 0.95rem;
   line-height: 1.7;
   white-space: pre-wrap;
@@ -318,13 +336,13 @@ h1::after {
 .sheet .num { color: #7a4a00; }
 
 .sheet-foot {
-  margin-top: 0.9rem;
-  padding-top: 0.7rem;
-  border-top: 1px solid rgba(26, 36, 48, 0.14);
-  font-weight: 600;
+  margin: 0.85rem 1.1rem 1rem;
+  padding: 0.5rem 0.65rem;
+  background: var(--yellow);
+  color: var(--ink-strong);
+  font-weight: 700;
   font-size: 0.92rem;
   line-height: 1.45;
-  color: #1a4f86;
   overflow-wrap: anywhere;
 }
 
@@ -334,11 +352,28 @@ h1::after {
   scroll-margin-top: 5rem;
 }
 
+#modulos {
+  border-top: 4px solid var(--blue);
+}
+
+#como-funciona {
+  border-top: 4px solid var(--yellow);
+}
+
 h2 {
   font-weight: 700;
   font-size: clamp(1.75rem, 3vw, 2.25rem);
   line-height: 1.2;
   color: #f4f0e6;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 4px;
+  margin-top: 0.55rem;
+  background: var(--yellow);
 }
 
 .intro {
@@ -373,6 +408,7 @@ h2 {
 
 .module a:hover {
   color: inherit;
+  background: rgba(55, 118, 171, 0.16);
 }
 
 .module a:hover h3,
@@ -390,7 +426,7 @@ h2 {
 
 .week-num {
   font-weight: 700;
-  font-size: 1.35rem;
+  font-size: 1.65rem;
   line-height: 1;
   color: var(--yellow);
 }
@@ -414,7 +450,7 @@ h2 {
   grid-area: go;
   align-self: center;
   font-weight: 700;
-  color: var(--blue-soft);
+  color: var(--yellow);
 }
 
 .steps {
@@ -457,9 +493,9 @@ h2 {
 .cmd {
   display: block;
   margin-top: 0.65rem;
-  padding: 0.45rem 0.65rem;
-  background: rgba(55, 118, 171, 0.16);
-  color: #f4f0e6;
+  padding: 0.5rem 0.7rem;
+  background: var(--blue-deep);
+  color: #fff;
   font-size: 0.92rem;
   line-height: 1.45;
   overflow-wrap: anywhere;
@@ -480,11 +516,12 @@ h2 {
   margin-top: 1.75rem;
   font-weight: 700;
   font-size: clamp(1.45rem, 2.4vw, 1.8rem);
-  color: #f4f0e6;
+  color: var(--yellow);
 }
 
 .site-footer {
-  border-top: 1px solid var(--line);
+  background: var(--blue-deep);
+  border-top: 4px solid var(--yellow);
   padding-top: 1.75rem;
   padding-bottom: calc(2.25rem + env(safe-area-inset-bottom));
 }
@@ -497,19 +534,25 @@ h2 {
 .footer-name {
   font-weight: 700;
   font-size: 1.2rem;
-  color: #f4f0e6;
+  color: #fff;
 }
 
 .footer-note {
   margin-top: 0.35rem;
   max-width: 36rem;
-  color: var(--muted);
+  color: #f4f0e6;
 }
 
 .footer-note a,
 .site-footer nav a {
+  color: var(--yellow-bright);
   font-weight: 700;
   text-underline-offset: 0.16em;
+}
+
+.footer-note a:hover,
+.site-footer nav a:hover {
+  color: #fff;
 }
 
 .site-footer nav ul {
