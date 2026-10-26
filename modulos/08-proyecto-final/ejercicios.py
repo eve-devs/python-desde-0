@@ -72,6 +72,8 @@ def cargar_gastos(ruta: str | Path) -> list[dict]:
     monto (número finito), categoria (texto) y fecha (texto)."
     N es la posición, empezando en 1. No repite las reglas de crear_gasto:
     un monto 0 escrito a mano se lee igual. Las llaves de más se conservan.
+    Si un número tiene demasiados dígitos para leerlo, lanza ValueError
+    "El archivo de gastos tiene un número demasiado grande."
     """
     # TODO: si no existe, devuelve []. Si existe, valida y devuelve la lista.
     raise NotImplementedError

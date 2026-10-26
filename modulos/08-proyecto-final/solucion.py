@@ -142,6 +142,8 @@ def cargar_gastos(ruta: str | Path) -> list[dict]:
     monto (número finito), categoria (texto) y fecha (texto)."
     N es la posición, empezando en 1. No repite las reglas de crear_gasto:
     un monto 0 escrito a mano se lee igual. Las llaves de más se conservan.
+    Si un número tiene demasiados dígitos para leerlo, lanza ValueError
+    "El archivo de gastos tiene un número demasiado grande."
     """
     path = Path(ruta)
     if not path.exists():
@@ -150,6 +152,10 @@ def cargar_gastos(ruta: str | Path) -> list[dict]:
         datos = json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as error:
         raise ValueError("El archivo de gastos no contiene JSON válido.") from error
+    except ValueError as error:
+        raise ValueError(
+            "El archivo de gastos tiene un número demasiado grande."
+        ) from error
     if not isinstance(datos, list):
         raise ValueError("El archivo de gastos debe contener una lista.")
     for indice, gasto in enumerate(datos, start=1):

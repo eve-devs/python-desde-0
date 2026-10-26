@@ -40,6 +40,7 @@ Reglas de `crear_gasto`:
 - Si el texto no es JSON, lanza `ValueError` con `"El archivo de gastos no contiene JSON válido."`
 - Si el JSON no es una lista, lanza `ValueError` con `"El archivo de gastos debe contener una lista."`
 - Cada elemento tiene que ser un diccionario con `descripcion` (texto), `monto` (número finito), `categoria` (texto) y `fecha` (texto). Si no, `ValueError` con `"El gasto 1 debe tener descripcion (texto), monto (número finito), categoria (texto) y fecha (texto)."` El número es la posición, empezando en 1. No vuelve a aplicar las reglas de `crear_gasto`: un monto `0` escrito a mano se lee igual. Las llaves de más se conservan.
+- Si un número tiene demasiados dígitos para leerlo, `ValueError` con `"El archivo de gastos tiene un número demasiado grande."`
 
 `agregar_gasto` carga, crea el gasto, lo agrega, guarda y devuelve el gasto nuevo.
 

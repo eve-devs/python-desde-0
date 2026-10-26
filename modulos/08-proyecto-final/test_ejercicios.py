@@ -150,7 +150,8 @@ def test_cargar_gastos_rechaza_registros_incompletos_o_mal_formados(tmp_path, te
 
 def test_cargar_gastos_rechaza_un_monto_entero_enorme(tmp_path):
     ruta = tmp_path / "gastos.json"
-    monto = "1" + ("0" * 5000)
+    # Cabe al leer el JSON y no cabe en un float.
+    monto = "1" + ("0" * 1000)
     ruta.write_text(
         '[{"descripcion": "Café", "monto": '
         + monto
@@ -158,6 +159,22 @@ def test_cargar_gastos_rechaza_un_monto_entero_enorme(tmp_path):
         encoding="utf-8",
     )
     with pytest.raises(ValueError, match="El gasto 1 debe tener descripcion"):
+        ejercicios.cargar_gastos(ruta)
+
+
+def test_cargar_gastos_rechaza_un_entero_con_demasiados_digitos(tmp_path):
+    ruta = tmp_path / "gastos.json"
+    monto = "1" + ("0" * 5000)
+    ruta.write_text(
+        '[{"descripcion": "Café", "monto": '
+        + monto
+        + ', "categoria": "cafe", "fecha": "2026-10-01"}]\n',
+        encoding="utf-8",
+    )
+    with pytest.raises(
+        ValueError,
+        match="El archivo de gastos tiene un número demasiado grande",
+    ):
         ejercicios.cargar_gastos(ruta)
 
 
