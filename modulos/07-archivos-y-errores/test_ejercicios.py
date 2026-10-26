@@ -62,6 +62,19 @@ def test_agregar_linea_crea_y_no_duplica_el_salto(tmp_path):
     assert ejercicios.leer_texto(ruta) == "uno\ndos\n"
 
 
+def test_agregar_linea_escribe_exactamente_un_salto(tmp_path):
+    ruta = tmp_path / "lista.txt"
+    for linea in ("hola", "hola\n", "hola\n\n", "hola\r\n", "", "\n"):
+        ejercicios.agregar_linea(ruta, linea)
+    assert ruta.read_bytes() == b"hola\nhola\nhola\nhola\n\n\n"
+
+
+def test_agregar_linea_conserva_un_salto_en_medio(tmp_path):
+    ruta = tmp_path / "lista.txt"
+    ejercicios.agregar_linea(ruta, "una\ndos")
+    assert ruta.read_bytes() == b"una\ndos\n"
+
+
 def test_guardar_y_cargar_json_con_acentos(tmp_path):
     ruta = tmp_path / "datos.json"
     ejercicios.guardar_json(ruta, {"canción": "café"})

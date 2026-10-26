@@ -28,11 +28,19 @@ def crear_gasto(
     descripcion: se le quitan los espacios de los extremos. Si queda vacía,
     lanza ValueError "La descripción no puede estar vacía."
 
-    monto: tiene que ser int o float, finito y mayor que cero.
+    monto: tiene que ser int o float, no bool, y finito.
     True, False, los textos, inf y nan no sirven: ValueError
     "El monto debe ser un número."
-    Si es 0 o negativo: ValueError "El monto debe ser mayor que cero."
-    Se guarda como float redondeado a 2 decimales.
+    Un entero tan grande que no cabe en un float: ValueError
+    "El monto es demasiado grande."
+    Se redondea con round(monto, 2). Ese resultado tiene que ser mayor
+    que cero. Si es 0, negativo, o queda en 0.00: ValueError
+    "El monto debe ser mayor que cero."
+    0.001 y 0.004 quedan en 0.00 y no sirven. El float 0.005 no es
+    exactamente 5 milésimas: round lo deja en 0.01 y sí sirve.
+    Si cae justo en la mitad, round se queda con el centavo par:
+    10.125 queda en 10.12 y 0.375 queda en 0.38.
+    Se guarda como float.
 
     categoria: sin espacios en los extremos, en minúsculas.
     Si queda vacía: ValueError "La categoría no puede estar vacía."
@@ -56,6 +64,14 @@ def cargar_gastos(ruta: str | Path) -> list[dict]:
     "El archivo de gastos no contiene JSON válido."
     Si el JSON no es una lista, lanza ValueError
     "El archivo de gastos debe contener una lista."
+
+    Cada elemento tiene que ser un diccionario con descripcion (texto),
+    monto (int o float finito; no bool), categoria (texto) y fecha (texto).
+    Si falta una llave, el tipo no es ese, o el monto no cabe en un float,
+    lanza ValueError "El gasto N debe tener descripcion (texto),
+    monto (número finito), categoria (texto) y fecha (texto)."
+    N es la posición, empezando en 1. No repite las reglas de crear_gasto:
+    un monto 0 escrito a mano se lee igual. Las llaves de más se conservan.
     """
     # TODO: si no existe, devuelve []. Si existe, valida y devuelve la lista.
     raise NotImplementedError

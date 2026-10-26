@@ -31,6 +31,49 @@ def _validar_fecha(fecha: str) -> str:
     return fecha
 
 
+def _validar_monto(monto: float) -> float:
+    """Devuelve el monto redondeado a centavos, o avisa por qué no sirve."""
+    if isinstance(monto, bool) or not isinstance(monto, (int, float)):
+        raise ValueError("El monto debe ser un número.")
+
+    # El signo se mira antes de convertir: un entero negativo enorme
+    # también es "menor o igual que cero", y float() reventaría.
+    if isinstance(monto, int) and monto <= 0:
+        raise ValueError("El monto debe ser mayor que cero.")
+
+    try:
+        como_float = float(monto)
+    except OverflowError:
+        raise ValueError("El monto es demasiado grande.") from None
+
+    if not math.isfinite(como_float):
+        raise ValueError("El monto debe ser un número.")
+
+    redondeado = round(como_float, 2)
+    if redondeado <= 0:
+        raise ValueError("El monto debe ser mayor que cero.")
+    return redondeado
+
+
+def _gasto_bien_formado(gasto: object) -> bool:
+    """Comprueba llaves y tipos. No repite las reglas de crear_gasto."""
+    if not isinstance(gasto, dict):
+        return False
+    if not isinstance(gasto.get("descripcion"), str):
+        return False
+    if not isinstance(gasto.get("categoria"), str):
+        return False
+    if not isinstance(gasto.get("fecha"), str):
+        return False
+    monto = gasto.get("monto")
+    if isinstance(monto, bool) or not isinstance(monto, (int, float)):
+        return False
+    try:
+        return math.isfinite(monto)
+    except OverflowError:
+        return False
+
+
 def crear_gasto(
     descripcion: str,
     monto: float,
@@ -42,11 +85,19 @@ def crear_gasto(
     descripcion: se le quitan los espacios de los extremos. Si queda vacía,
     lanza ValueError "La descripción no puede estar vacía."
 
-    monto: tiene que ser int o float, finito y mayor que cero.
+    monto: tiene que ser int o float, no bool, y finito.
     True, False, los textos, inf y nan no sirven: ValueError
     "El monto debe ser un número."
-    Si es 0 o negativo: ValueError "El monto debe ser mayor que cero."
-    Se guarda como float redondeado a 2 decimales.
+    Un entero tan grande que no cabe en un float: ValueError
+    "El monto es demasiado grande."
+    Se redondea con round(monto, 2). Ese resultado tiene que ser mayor
+    que cero. Si es 0, negativo, o queda en 0.00: ValueError
+    "El monto debe ser mayor que cero."
+    0.001 y 0.004 quedan en 0.00 y no sirven. El float 0.005 no es
+    exactamente 5 milésimas: round lo deja en 0.01 y sí sirve.
+    Si cae justo en la mitad, round se queda con el centavo par:
+    10.125 queda en 10.12 y 0.375 queda en 0.38.
+    Se guarda como float.
 
     categoria: sin espacios en los extremos, en minúsculas.
     Si queda vacía: ValueError "La categoría no puede estar vacía."
@@ -61,10 +112,7 @@ def crear_gasto(
     if not isinstance(descripcion, str) or not descripcion.strip():
         raise ValueError("La descripción no puede estar vacía.")
 
-    if isinstance(monto, bool) or not isinstance(monto, (int, float)) or not math.isfinite(monto):
-        raise ValueError("El monto debe ser un número.")
-    if monto <= 0:
-        raise ValueError("El monto debe ser mayor que cero.")
+    monto_listo = _validar_monto(monto)
 
     if not isinstance(categoria, str) or not categoria.strip():
         raise ValueError("La categoría no puede estar vacía.")
@@ -72,7 +120,7 @@ def crear_gasto(
     fecha_lista = date.today().isoformat() if fecha is None else _validar_fecha(fecha)
     return {
         "descripcion": descripcion.strip(),
-        "monto": round(float(monto), 2),
+        "monto": monto_listo,
         "categoria": categoria.strip().lower(),
         "fecha": fecha_lista,
     }
@@ -86,6 +134,14 @@ def cargar_gastos(ruta: str | Path) -> list[dict]:
     "El archivo de gastos no contiene JSON válido."
     Si el JSON no es una lista, lanza ValueError
     "El archivo de gastos debe contener una lista."
+
+    Cada elemento tiene que ser un diccionario con descripcion (texto),
+    monto (int o float finito; no bool), categoria (texto) y fecha (texto).
+    Si falta una llave, el tipo no es ese, o el monto no cabe en un float,
+    lanza ValueError "El gasto N debe tener descripcion (texto),
+    monto (número finito), categoria (texto) y fecha (texto)."
+    N es la posición, empezando en 1. No repite las reglas de crear_gasto:
+    un monto 0 escrito a mano se lee igual. Las llaves de más se conservan.
     """
     path = Path(ruta)
     if not path.exists():
@@ -96,6 +152,12 @@ def cargar_gastos(ruta: str | Path) -> list[dict]:
         raise ValueError("El archivo de gastos no contiene JSON válido.") from error
     if not isinstance(datos, list):
         raise ValueError("El archivo de gastos debe contener una lista.")
+    for indice, gasto in enumerate(datos, start=1):
+        if not _gasto_bien_formado(gasto):
+            raise ValueError(
+                f"El gasto {indice} debe tener descripcion (texto), "
+                "monto (número finito), categoria (texto) y fecha (texto)."
+            )
     return datos
 
 

@@ -54,14 +54,19 @@ def escribir_texto(ruta: str | Path, contenido: str) -> None:
 
 
 def agregar_linea(ruta: str | Path, linea: str) -> None:
-    """Agrega linea al final del archivo y garantiza un salto de línea.
+    """Agrega una línea lógica al final del archivo.
 
     Si el archivo no existe, lo crea.
-    Si linea ya termina en salto de línea, no pongas otro.
-    "hola" y "hola\\n" dejan las dos el texto hola seguido de un salto.
+    Se le quitan los saltos del final (\\n, \\r\\n o varios seguidos)
+    y se escribe exactamente un \\n. "hola", "hola\\n", "hola\\n\\n"
+    y "hola\\r\\n" dejan el mismo texto: hola y un salto.
+    Una línea vacía, "" o "\\n", deja una línea en blanco.
+    Un salto en medio sí se conserva: "una\\ndos" escribe dos líneas
+    y, al final, un solo salto.
     Usa UTF-8 y newline="\\n" para que el salto no se convierta en \\r\\n.
     """
     # TODO: abre en modo "a", con encoding="utf-8" y newline="\n".
+    # Quita los saltos del final y escribe exactamente uno.
     raise NotImplementedError
 
 

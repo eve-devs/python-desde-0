@@ -121,7 +121,7 @@ No pongas `[]` como valor por defecto de `leer_json_si_existe`. Es el mismo prob
 | `dividir` | Divide, o avisa en español si el divisor es 0 |
 | `leer_entero` | `int` o `None` |
 | `leer_texto` / `escribir_texto` | UTF-8. Escribir reemplaza el archivo |
-| `agregar_linea` | Agrega una línea, creando el archivo si no está |
+| `agregar_linea` | Una línea lógica: quita los saltos del final y escribe exactamente uno. Crea el archivo si no está |
 | `cargar_json` / `guardar_json` | Ida y vuelta, con acentos legibles |
 | `leer_json_si_existe` | Si falta el archivo, devuelve lo que te pasaron |
 | `numeros_de_archivo` | Lee decimales y se salta el resto |
