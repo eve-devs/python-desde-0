@@ -655,30 +655,42 @@ main:focus {
 }
 
 @media (min-width: 48rem) {
-  .modules {
-    grid-template-columns: 1fr 1fr;
+  .hero-grid,
+  .footer-grid {
+    justify-items: center;
   }
 
-  .footer-grid {
-    grid-template-columns: 1.4fr 0.8fr;
-    align-items: start;
+  .hero-copy,
+  .section-head,
+  .site-footer {
+    align-items: center;
+    text-align: center;
+  }
+
+  .lede,
+  .intro,
+  .steps,
+  .notes,
+  .sheet,
+  .footer-note {
+    margin-inline: auto;
+  }
+
+  .actions,
+  .facts {
+    justify-content: center;
+  }
+
+  .signoff {
+    text-align: center;
   }
 
   .site-footer nav ul {
-    justify-items: end;
-  }
-}
-
-@media (min-width: 56rem) {
-  .hero-grid {
-    grid-template-columns: minmax(0, 1.15fr) minmax(16.25rem, 0.82fr);
-    gap: var(--space-7) var(--space-8);
-    align-items: center;
+    justify-items: center;
   }
 
-  .sheet {
-    width: 100%;
-    justify-self: end;
+  .modules {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
