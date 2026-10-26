@@ -27,9 +27,6 @@
 
   --radius: 0;
   --border: 3px solid var(--color-border);
-  --shadow-sm: 3px 3px 0 var(--color-violet-deep);
-  --shadow-md: 6px 6px 0 var(--color-violet-deep);
-  --shadow-hover: 8px 8px 0 var(--color-violet);
 
   --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --weight-regular: 400;
@@ -174,7 +171,6 @@ h3 {
   font-weight: var(--weight-bold);
   text-decoration: none;
   border: var(--border);
-  box-shadow: var(--shadow-sm);
 }
 
 .skip:focus {
@@ -285,14 +281,12 @@ h3 {
   font-weight: var(--weight-bold);
   border: var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
 }
 
 .site-nav a.nav-cta:hover {
   color: var(--color-on-lime);
   background: var(--color-lime);
-  transform: translate(-2px, -2px);
-  box-shadow: var(--shadow-md);
+  border-color: var(--color-violet);
 }
 
 .hero {
@@ -352,26 +346,23 @@ h3 {
 .btn {
   background: var(--color-lime);
   color: var(--color-on-lime);
-  box-shadow: var(--shadow-sm);
 }
 
 .btn:hover {
   background: var(--color-lime);
   color: var(--color-on-lime);
-  transform: translate(-2px, -2px);
-  box-shadow: var(--shadow-md);
+  border-color: var(--color-violet);
 }
 
 .btn-secondary {
   background: transparent;
   color: var(--color-text);
-  box-shadow: 4px 4px 0 var(--color-border-strong);
 }
 
 .btn-secondary:hover {
   color: var(--color-text);
-  transform: translate(-2px, -2px);
-  box-shadow: var(--shadow-md);
+  background: var(--color-surface);
+  border-color: var(--color-violet);
 }
 
 .facts {
@@ -395,7 +386,6 @@ h3 {
   color: var(--color-text);
   border: var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-md);
 }
 
 .sheet figcaption {
@@ -441,7 +431,6 @@ h3 {
   background: var(--color-lime);
   color: var(--color-on-lime);
   border: 2px solid var(--color-on-lime);
-  box-shadow: var(--shadow-sm);
 }
 
 .section {
@@ -486,7 +475,6 @@ h3 {
   background: var(--color-surface);
   border: var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-md);
   color: inherit;
   text-decoration: none;
   scroll-margin-top: var(--space-10);
@@ -494,8 +482,8 @@ h3 {
 
 .module a:hover {
   color: inherit;
-  transform: translate(-2px, -2px);
-  box-shadow: var(--shadow-hover);
+  background: var(--color-surface-2);
+  border-color: var(--color-violet);
 }
 
 .module a:hover h3 {
@@ -548,7 +536,6 @@ h3 {
   background: var(--color-surface);
   border: var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-md);
   counter-increment: paso;
 }
 
@@ -586,7 +573,6 @@ h3 {
   background: var(--color-surface-2);
   color: var(--color-lime);
   border: var(--border);
-  box-shadow: var(--shadow-sm);
 }
 
 .note {
@@ -649,10 +635,9 @@ h3 {
 .site-nav a.nav-cta,
 .module a {
   transition:
-    transform var(--duration) ease,
-    box-shadow var(--duration) ease,
     color var(--duration) ease,
-    background-color var(--duration) ease;
+    background-color var(--duration) ease,
+    border-color var(--duration) ease;
 }
 
 main:focus {
@@ -707,13 +692,6 @@ main:focus {
   .site-nav a.nav-cta,
   .module a {
     transition: none;
-  }
-
-  .btn:hover,
-  .btn-secondary:hover,
-  .site-nav a.nav-cta:hover,
-  .module a:hover {
-    transform: none;
   }
 }
 
