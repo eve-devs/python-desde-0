@@ -215,6 +215,7 @@ h3 {
   background-image: var(--dots);
   background-size: 24px 24px;
   border-bottom: var(--border);
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 .header-inner {
@@ -666,23 +667,49 @@ main:focus {
 
 @media (max-width: 47.99rem) {
   .header-inner {
-    align-items: stretch;
-    gap: var(--space-3);
-  }
-
-  .site-nav {
-    justify-content: stretch;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    flex-wrap: nowrap;
+    align-items: center;
     gap: var(--space-2);
   }
 
+  .brand {
+    flex: 0 0 auto;
+    font-size: 1.0625rem;
+    white-space: nowrap;
+  }
+
+  .site-nav {
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    margin-left: auto;
+    gap: 0.15rem 0.7rem;
+    min-width: max-content;
+  }
+
   .site-nav a {
-    justify-content: center;
+    flex: 0 0 auto;
+    padding: 0.15rem 0.15rem;
+    font-size: 0.9375rem;
+    white-space: nowrap;
   }
 
   .site-nav a.nav-cta {
-    grid-column: 1 / -1;
+    display: none;
+  }
+}
+
+@media (max-width: 23.99rem) {
+  .brand {
+    font-size: 1rem;
+  }
+
+  .site-nav {
+    gap: 0.1rem 0.4rem;
+  }
+
+  .site-nav a {
+    font-size: 0.8125rem;
   }
 }
 
