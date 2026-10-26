@@ -222,15 +222,6 @@ h1 .line + .line {
   color: var(--ink-strong);
 }
 
-h1::after {
-  content: "";
-  display: block;
-  width: 4.5rem;
-  height: 4px;
-  margin-top: 1.05rem;
-  background: var(--yellow-bright);
-}
-
 .lede {
   margin-top: 1.1rem;
   max-width: 38rem;
