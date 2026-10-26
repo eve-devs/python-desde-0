@@ -37,15 +37,17 @@
     <section class="hero" aria-labelledby="titulo">
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <p class="kicker">Curso gratuito · en español</p>
-          <h1 id="titulo">
-            <span class="line">Python</span>
-            <span class="line">desde cero</span>
-          </h1>
+          <div class="title-block">
+            <p class="kicker">Curso gratuito · en español</p>
+            <h1 class="display" id="titulo">
+              <span class="line">Python</span>
+              <span class="line">desde cero</span>
+            </h1>
+          </div>
           <p class="lede">Para gente que nunca ha programado. El curso está en español, se estudia a tu ritmo y las pruebas automáticas te dicen si vas bien. El proyecto final es un registro de gastos en la terminal.</p>
           <div class="actions">
             <a class="btn" href="https://github.com/eve-devs/python-desde-0/blob/main/modulos/01-variables-y-tipos/notas.md">Empezar módulo 1</a>
-            <a class="link" href="https://github.com/eve-devs/python-desde-0">Ver en GitHub</a>
+            <a class="btn-secondary" href="https://github.com/eve-devs/python-desde-0">Ver en GitHub</a>
           </div>
           <ul class="facts" role="list">
             <li role="listitem">8 módulos</li>
@@ -66,10 +68,12 @@
       </div>
     </section>
 
-    <section class="band" id="modulos" aria-labelledby="titulo-modulos">
-      <div class="wrap">
-        <h2 id="titulo-modulos">Los ocho módulos</h2>
-        <p class="intro">Cada semana vive en su carpeta, con notas, ejercicios y pruebas. Está pensado como una semana por módulo; si un tema te pide más tiempo, quédate ahí. El enlace abre las notas en GitHub.</p>
+    <section class="section" id="modulos" aria-labelledby="titulo-modulos">
+      <div class="wrap stack">
+        <div class="section-head">
+          <h2 id="titulo-modulos">Los ocho módulos</h2>
+          <p class="intro">Cada semana vive en su carpeta, con notas, ejercicios y pruebas. Está pensado como una semana por módulo; si un tema te pide más tiempo, quédate ahí. El enlace abre las notas en GitHub.</p>
+        </div>
         <ol class="modules" role="list">
           <li class="module" role="listitem">
             <a href="https://github.com/eve-devs/python-desde-0/blob/main/modulos/01-variables-y-tipos/notas.md">
@@ -139,10 +143,12 @@
       </div>
     </section>
 
-    <section class="band" id="como-funciona" aria-labelledby="titulo-metodo">
-      <div class="wrap">
-        <h2 id="titulo-metodo">Cómo funciona</h2>
-        <p class="intro">Cuatro pasos por semana. El material sigue en el repositorio; esta página solo es la puerta.</p>
+    <section class="section section-alt" id="como-funciona" aria-labelledby="titulo-metodo">
+      <div class="wrap stack">
+        <div class="section-head">
+          <h2 id="titulo-metodo">Cómo funciona</h2>
+          <p class="intro">Cuatro pasos por semana. El material sigue en el repositorio; esta página solo es la puerta.</p>
+        </div>
         <ol class="steps">
           <li>
             <h3>Lee las notas</h3>
@@ -162,8 +168,10 @@
             <p>Si salen en verde, cambia ☐ por ☑ en la tabla del README.</p>
           </li>
         </ol>
-        <p class="note">Si llevas un rato atorada, mira <code>solucion.py</code> y vuelve a explicar la idea con tus palabras. Copiarla sin leerla no enseña.</p>
-        <p class="note">Para instalar Python 3.12 o 3.13 y preparar el entorno, sigue el <a href="https://github.com/eve-devs/python-desde-0#instalar-python-312-o-mayor">README</a>.</p>
+        <div class="notes">
+          <p class="note">Si llevas un rato atorada, mira <code>solucion.py</code> y vuelve a explicar la idea con tus palabras. Copiarla sin leerla no enseña.</p>
+          <p class="note">Para instalar Python 3.12 o 3.13 y preparar el entorno, sigue el <a href="https://github.com/eve-devs/python-desde-0#instalar-python-312-o-mayor">README</a>.</p>
+        </div>
         <p class="signoff">Buena semana 1.</p>
       </div>
     </section>
