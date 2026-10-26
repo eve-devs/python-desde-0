@@ -229,23 +229,39 @@ h3 {
 .brand {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
   min-height: var(--target);
   color: var(--color-text);
+  font-size: 1.25rem;
   font-weight: var(--weight-bold);
-  line-height: var(--leading-heading);
+  line-height: 1;
   text-decoration: none;
 }
 
-.brand:hover {
+.brand-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2em 0.4em;
+  color: var(--color-violet);
+  font-size: 0.95em;
+  font-weight: var(--weight-bold);
+  line-height: 1;
+  background: rgba(142, 114, 255, 0.12);
+  border: 1px solid var(--color-violet);
+  border-radius: 5px;
+}
+
+.brand-name {
+  color: var(--color-text);
+}
+
+.brand:hover .brand-name {
   color: var(--color-violet);
 }
 
-.mark {
-  width: 2.25rem;
-  height: 2.25rem;
-  display: block;
-  flex: none;
+.brand:hover .brand-chip {
+  background: rgba(142, 114, 255, 0.22);
 }
 
 .site-nav {
@@ -712,7 +728,7 @@ main:focus {
   .module a,
   .sheet,
   .steps li,
-  .mark {
+  .brand-chip {
     border: 1px solid ButtonText;
   }
 }
