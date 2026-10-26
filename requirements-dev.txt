@@ -1,0 +1,4 @@
+# Dependencias para correr las pruebas.
+# Instálalas dentro del entorno virtual:
+#   python -m pip install -r requirements-dev.txt
+pytest==9.1.1
