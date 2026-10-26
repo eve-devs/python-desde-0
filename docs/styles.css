@@ -47,10 +47,10 @@
   --text-num: 1.75rem;
   --measure: 40rem;
   --measure-tight: 38rem;
-  --column: 64rem;
+  --column: 112rem;
 
-  --container: 67.5rem;
-  --gutter: var(--space-4);
+  --container: var(--column);
+  --gutter: clamp(1rem, 3vw, 4rem);
   --target: 2.75rem;
   --target-lg: 3rem;
   --dots: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
@@ -697,42 +697,25 @@ main:focus {
 }
 
 @media (min-width: 48rem) {
-  .hero-grid,
+  .modules {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: none;
+    align-items: stretch;
+  }
+
   .footer-grid {
-    justify-items: center;
-  }
-
-  .hero-copy,
-  .section-head,
-  .site-footer {
-    align-items: center;
-    text-align: center;
-  }
-
-  .lede,
-  .intro,
-  .steps,
-  .notes,
-  .sheet,
-  .footer-note {
-    margin-inline: auto;
-  }
-
-  .actions,
-  .facts {
-    justify-content: center;
-  }
-
-  .signoff {
-    text-align: center;
+    grid-template-columns: minmax(0, 1.6fr) minmax(14rem, 0.7fr);
+    align-items: start;
+    justify-items: stretch;
   }
 
   .site-footer nav ul {
-    justify-items: center;
-  }
-
-  .modules {
-    grid-template-columns: 1fr 1fr;
+    justify-items: end;
   }
 }
 
